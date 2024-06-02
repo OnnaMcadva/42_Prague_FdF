@@ -16,7 +16,7 @@ int ipart(float x) {
     return (int)floor(x);
 }
 
-int round(float x) {
+int round_float(float x) {
     return ipart(x + 0.5f);
 }
 
@@ -42,7 +42,7 @@ void draw_line(float x1, float y1, float x2, float y2) {
     float gradient = dy / dx;
     
     // Handle the first endpoint
-    int xend = round(x1);
+    int xend = round_float(x1);
     float yend = y1 + gradient * (xend - x1);
     float xgap = 1 - fpart(x1 + 0.5f);
     int xpxl1 = xend;  // will be used in the main loop
@@ -52,10 +52,10 @@ void draw_line(float x1, float y1, float x2, float y2) {
     float intery = yend + gradient; // first y-intersection for the main loop
     
     // Handle the second endpoint
-    xend = round(x2);
-    yend = y2 + gradient * (xend - x2);
+    int xend2 = round_float(x2);
+    yend = y2 + gradient * (xend2 - x2);
     xgap = fpart(x2 + 0.5f);
-    int xpxl2 = xend;  // will be used in the main loop
+    int xpxl2 = xend2;  // will be used in the main loop
     int ypxl2 = ipart(yend);
     plot(xpxl2, ypxl2, (1 - fpart(yend)) * xgap);
     plot(xpxl2, ypxl2 + 1, fpart(yend) * xgap);
