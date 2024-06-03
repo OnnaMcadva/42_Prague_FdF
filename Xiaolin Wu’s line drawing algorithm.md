@@ -70,9 +70,37 @@ void draw_line(float x1, float y1, float x2, float y2) {
 
 // Пример использования
 int main() {
-    draw_line(10.5f, 20.5f, 30.5f, 40.5f);
+    //draw_line(10.5f, 20.5f, 30.5f, 40.5f);
+    printf("\nPlotting at (1, 1) -> (8, 3) with brightness\n");
+    draw_line(1.0f, 1.0f, 8.0f, 3.0f);
+    
+    printf("\nPlotting at (1, 1) -> (3, 8) with brightness\n");
+    draw_line(1.0f, 1.0f, 3.0f, 8.0f);
+    
+    printf("\nPlotting at (-1, -1) -> (-8, -3) with brightness\n");
+    draw_line(-1.0f, -1.0f, -8.0f, -3.0f);
+    
+    printf("\nPlotting at (-1, -1) -> (-3, -8) with brightness\n");
+    draw_line(-1.0f, -1.0f, -3.0f, -8.0f);
+    
+    printf("\nPlotting at (-1, -1) -> (8, 3) with brightness\n");
+    draw_line(-1.0f, -1.0f, 8.0f, 3.0f);
+    
+    printf("\nPlotting at (-1, -1) -> (3, 8) with brightness\n");
+    draw_line(-1.0f, -1.0f, 3.0f, 8.0f);
+    
+    printf("\nPlotting at (1, 1) -> (-8, -3) with brightness\n");
+    draw_line(1.0f, 1.0f, -8.0f, -3.0f);
+    
+    printf("\nPlotting at (1, 1) -> (-3, -8) with brightness\n");
+    draw_line(1.0f, 1.0f, -3.0f, -8.0f);
+    
     return 0;
 }
+
+
+// cc plot.c -o plot -lm
+
 ```
 
 ### Объяснение
