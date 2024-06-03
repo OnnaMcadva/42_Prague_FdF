@@ -4,67 +4,95 @@ Pеализация алгоритма Ву для рисования линий
 #include <stdio.h>
 #include <math.h>
 
-// Определяем функцию для рисования точки
+// Функция для рисования точки с координатами (x, y) и яркостью c
 void plot(int x, int y, float c) {
-    // Эта функция должна рисовать точку с координатами (x, y) и яркостью c
-    // Пример вывода для демонстрации
     printf("Plotting at (%d, %d) with brightness %.2f\n", x, y, c);
 }
 
-// Определяем вспомогательные функции
+// Целая часть числа
 int ipart(float x) {
     return (int)floor(x);
 }
 
+// Округление до ближайшего целого
 int round_float(float x) {
-    return ipart(x + 0.5f);
+    return ipart(x + 0.5);
 }
 
+// Дробная часть числа
 float fpart(float x) {
     return x - floor(x);
 }
 
-// Функция для рисования линии
+// 1 - дробная часть числа
+float rfpart(float x) {
+    return 1.0 - fpart(x);
+}
+
+// Функция для рисования линии с использованием алгоритма Ву
 void draw_line(float x1, float y1, float x2, float y2) {
-    if (x2 < x1) {
-        // Swap points if x1 > x2
-        float temp = x1;
-        x1 = x2;
-        x2 = temp;
-        
-        temp = y1;
-        y1 = y2;
-        y2 = temp;
+    int steep = fabs(y2 - y1) > fabs(x2 - x1);
+
+    if (steep) {
+        // Меняем местами x и y
+        float tmp;
+        tmp = x1; x1 = y1; y1 = tmp;
+        tmp = x2; x2 = y2; y2 = tmp;
     }
-    
+
+    if (x1 > x2) {
+        // Меняем начальные и конечные точки
+        float tmp;
+        tmp = x1; x1 = x2; x2 = tmp;
+        tmp = y1; y1 = y2; y2 = tmp;
+    }
+
     float dx = x2 - x1;
     float dy = y2 - y1;
     float gradient = dy / dx;
-    
-    // Handle the first endpoint
-    int xend = round_float(x1);
+
+    // Обработка начальной точки
+    int xend = round(x1);
     float yend = y1 + gradient * (xend - x1);
-    float xgap = 1 - fpart(x1 + 0.5f);
-    int xpxl1 = xend;  // will be used in the main loop
+    float xgap = rfpart(x1 + 0.5);
+    int xpxl1 = xend;
     int ypxl1 = ipart(yend);
-    plot(xpxl1, ypxl1, (1 - fpart(yend)) * xgap);
-    plot(xpxl1, ypxl1 + 1, fpart(yend) * xgap);
-    float intery = yend + gradient; // first y-intersection for the main loop
-    
-    // Handle the second endpoint
-    int xend2 = round_float(x2);
-    yend = y2 + gradient * (xend2 - x2);
-    xgap = fpart(x2 + 0.5f);
-    int xpxl2 = xend2;  // will be used in the main loop
+    if (steep) {
+        plot(ypxl1, xpxl1, rfpart(yend) * xgap);
+        plot(ypxl1 + 1, xpxl1, fpart(yend) * xgap);
+    } else {
+        plot(xpxl1, ypxl1, rfpart(yend) * xgap);
+        plot(xpxl1, ypxl1 + 1, fpart(yend) * xgap);
+    }
+    float intery = yend + gradient;
+
+    // Обработка конечной точки
+    xend = round_float(x2);
+    yend = y2 + gradient * (xend - x2);
+    xgap = fpart(x2 + 0.5);
+    int xpxl2 = xend;
     int ypxl2 = ipart(yend);
-    plot(xpxl2, ypxl2, (1 - fpart(yend)) * xgap);
-    plot(xpxl2, ypxl2 + 1, fpart(yend) * xgap);
-    
-    // Main loop
-    for (int x = xpxl1 + 1; x <= xpxl2 - 1; x++) {
-        plot(x, ipart(intery), 1 - fpart(intery));
-        plot(x, ipart(intery) + 1, fpart(intery));
-        intery = intery + gradient;
+    if (steep) {
+        plot(ypxl2, xpxl2, rfpart(yend) * xgap);
+        plot(ypxl2 + 1, xpxl2, fpart(yend) * xgap);
+    } else {
+        plot(xpxl2, ypxl2, rfpart(yend) * xgap);
+        plot(xpxl2, ypxl2 + 1, fpart(yend) * xgap);
+    }
+
+    // Основной цикл
+    if (steep) {
+        for (int x = xpxl1 + 1; x < xpxl2; x++) {
+            plot(ipart(intery), x, rfpart(intery));
+            plot(ipart(intery) + 1, x, fpart(intery));
+            intery += gradient;
+        }
+    } else {
+        for (int x = xpxl1 + 1; x < xpxl2; x++) {
+            plot(x, ipart(intery), rfpart(intery));
+            plot(x, ipart(intery) + 1, fpart(intery));
+            intery += gradient;
+        }
     }
 }
 
@@ -97,7 +125,6 @@ int main() {
     
     return 0;
 }
-
 
 // cc plot.c -o plot -lm
 
