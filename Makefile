@@ -48,7 +48,7 @@ LIBFT_DIR   = libft
 MLX_DIR     = minilibx-linux
 
 # Files
-SRC_FILES   = fdf_common.c fdf.c map_color.c map_get.c map_handle.c map_read.c math_01.c win_handle.c win_hotkey.c win_mouse.c
+# SRC_FILES   = fdf_common.c fdf.c map_color.c map_get.c map_handle.c map_read.c math_01.c win_handle.c win_hotkey.c win_mouse.c
 SRC         = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
