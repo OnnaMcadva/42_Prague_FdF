@@ -47,7 +47,7 @@ int	main(int argc, char *argv[])
 	if (map_render(&fdf, FIT) < 0)
 		goodbye(ERR_MAP);
 	setup_hooks(&fdf);
-	mlx_loop_hook(fdf.wndw.mlx, &map_render, &fdf);
+	// mlx_loop_hook(fdf.wndw.mlx, &map_render, &fdf);
 	mlx_loop(fdf.wndw.mlx);
 	mlx_do_key_autorepeaton(fdf.wndw.mlx);
 	free (fdf.map.points);
