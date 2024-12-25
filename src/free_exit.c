@@ -51,6 +51,11 @@ int	exit_program(void *f)
 
 	fdf = (t_fdf *)f;
 	mlx_destroy_window(fdf->wndw.mlx, fdf->wndw.win);
+		fdf->wndw.win = NULL;
 	free(fdf->map.points);
 	exit(EXIT_SUCCESS);
 }
+
+
+/* valgrind --leak-check=full --show-leak-kinds=all -s ./fdf maps/42.fdf */
+
