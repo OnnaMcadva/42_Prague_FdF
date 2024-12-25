@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:17:47 by annavm            #+#    #+#             */
-/*   Updated: 2024/12/24 19:46:46 by annavm           ###   ########.fr       */
+/*   Updated: 2024/12/25 18:23:23 by anmakaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,19 @@ int	exit_program(void *f)
 	t_fdf	*fdf;
 
 	fdf = (t_fdf *)f;
+	mlx_destroy_image(fdf->wndw.mlx, fdf->img.imgptr);
 	mlx_destroy_window(fdf->wndw.mlx, fdf->wndw.win);
 	fdf->wndw.win = NULL;
 	mlx_destroy_display(fdf->wndw.mlx);
 	free(fdf->wndw.mlx);
 	fdf->wndw.mlx = NULL;
 	free(fdf->map.points);
+	fdf->map.points = NULL;
+	if (fdf->map.memory)
+	{
+		free(fdf->map.memory);
+		fdf->map.memory = NULL;
+	}
 	exit(EXIT_SUCCESS);
 }
 

@@ -42,7 +42,7 @@ void	draw_stars(t_fdf *fdf)
 	t_vrtx	star;
 
 	i = 0;
-	while (i < 150)
+	while (i < 100)
 	{
 		star.axis[X] = rand() % WINX;
 		star.axis[Y] = rand() % WINY;

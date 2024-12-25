@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   win_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 19:58:30 by annavm            #+#    #+#             */
-/*   Updated: 2024/12/24 17:11:11 by annavm           ###   ########.fr       */
+/*   Updated: 2024/12/25 18:03:51 by anmakaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	init_mlx(t_fdf *fdf)
 	if (!fdf->wndw.mlx)
 	{
 		ft_putendl_fd("Error: mlx_init failed!", 2);
+		fdf->wndw.mlx = NULL;
 		exit(1);
 	}
 }
@@ -31,6 +32,7 @@ static void	create_window(t_fdf *fdf)
 		ft_putendl_fd("Error: mlx_new_window failed!", 2);
 		mlx_destroy_display(fdf->wndw.mlx);
 		free(fdf->wndw.mlx);
+		fdf->wndw.mlx = NULL;
 		exit(1);
 	}
 }
